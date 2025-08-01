@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>QAZNA ANALYTICS</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap');
+  body {
+    margin: 0; padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    background: #1e3c72;
+    color: #ffffff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+  }
+  h1 {
+    width: 100%;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    color: #f9f9f9;
+    margin-bottom: 40px;
+    font-size: 38px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+  }
+  .top-button {
+    position: absolute;
+    top: 20px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  .top-button:first-of-type {
+    left: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #000000;
+    border: 1px solid #ccc;
+}
+  .top-button:last-of-type {
+    right: 20px;
+    background: linear-gradient(135deg, #43e97b, #38f9d7);
+    color: white;
+    border: none;
+  }
+  .top-button:hover {
+    opacity: 0.9;
+  }
+  .card {
+    background: #1e3c72;
+    border-radius: 20px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    padding: 25px 30px;
+    box-sizing: border-box;
+    
+    border: 1px solid #e0e6ed;
+  }
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+  }
+  input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    caret-color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+  button {
+    margin-top: 25px;
+    padding: 14px 25px;
+    background: linear-gradient(to right, #0077cc, #0056b3);
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+  }
+  button:hover {
+    background: linear-gradient(to right, #0056b3, #0077cc);
+    transform: scale(1.04);
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(72, 239, 182, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(72, 239, 182, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(72, 239, 182, 0); }
+  }
+  #calculator {
+    width: 300px;
+    flex-shrink: 0;
+  }
+  #calculator h2 {
+    margin-top: 0;
+    font-size: 22px;
+    color: #ffffff;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+  }
+  #calcResult {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+  }
+  #creditForm {
+    max-width: 420px;
+    flex-grow: 1;
+    min-width: 300px;
+  }
+  #links {
+    max-width: 300px;
+    background: #1e3c72;
+    border-radius: 20px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    padding: 25px;
+    font-size: 15px;
+    color: #ffffff;
+    line-height: 1.5;
+    flex-shrink: 0;
+    
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  #links h3 {
+    color: #ffffff;
+    margin-top: 0;
+    font-size: 20px;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+  }
+  #links a {
+    display: block;
+    margin: 10px 0;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    background: #003366;
+    padding: 10px 14px;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+  #links a:hover {
+    background: #ffffff;
+    color: #003366;
+    border: 1px solid #003366;
+}
+  #probabilityBar {
+    margin-bottom: 20px;
+    height: 24px;
+    background: #e0e0e0;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+  #probabilityFill {
+    height: 100%;
+    background: linear-gradient(to right, #ff4d4d, #ffcc00, #28a745);
+    width: 0;
+    transition: width 0.6s ease;
+    border-radius: 14px;
+}
+  @media (max-width: 900px) {
+    body {
+      flex-direction: column;
+      align-items: center;
+    }
+    #calculator, #links, #creditForm {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
+  #countdownTimer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 12px;
+    border-radius: 12px;
+    display: none;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+</style>
+</head>
+<body>
+<a class="top-button" href="https://aisoip.adilet.gov.kz/debtors?ysclid=mb9adj2zt2343063857" target="_blank">РЕЕСТР</a><a class="top-button" href="https://e-loan.homecredit.kz/online4/start?iframe_id=106050&lang=ru" style="left: 180px; top: 20px; background: linear-gradient(to right, #dc3545, #c82333); color: white; border: none;" target="_blank">Онлайн кредит от HOME до 8 000 000</a>
+<a class="top-button" href="https://wa.me/77083624582" target="_blank">График МФО</a>
+<h1>QAZNA ANALYTICS</h1>
+<!-- Калькулятор -->
+<div class="card" id="calculator">
+<h2>Кредитный калькулятор</h2>
+<form id="calcForm">
+<label for="calcAmount">Сумма (₸):</label>
+<input id="calcAmount" min="0" placeholder="Введите сумму" required="" type="number"/>
+<label for="calcTerm">Срок (мес):</label>
+<input id="calcTerm" min="1" placeholder="Введите срок" required="" type="number"/>
+<label for="calcRate" title="Примерные ставки банков РК: Халык 17%, Freedom 20–30%, Жусан 20%, БЦК 18%, Forte 15–25%, Береке 19%">Ставка (% годовых):</label>
+<input id="calcRate" min="0" placeholder="Введите ставку" required="" step="0.01" type="number"/>
+<button type="submit">Рассчитать</button>
+</form>
+<div id="calcResult"></div>
+</div>
+<!-- Форма заявки -->
+<form class="card" id="creditForm" novalidate="">
+<div id="countdownTimer">⏳ Заявка: 30:00</div><div id="probabilityBar"><div id="probabilityFill"></div></div><label for="name">ИИН:</label>
+<input id="iin" maxlength="12" pattern="^\d{12}$" placeholder="Введите ваш ИИН" required="" title="Введите 12-значный ИИН" type="text"/>
+<label for="phone">Телефон:</label>
+<input id="phone" pattern="^\+?\d{7,15}$" placeholder="+7 (777) 777-77-77" required="" type="tel"/>
+<label for="monthlyPayment">Платеж по кредитам в месяц (₸):</label>
+<input id="monthlyPayment" required="" type="number"/>
+<label for="salary">Заработная плата (₸):</label>
+<input id="salary" required="" type="number"/>
+<label for="extraIncome">Доп. доход (₸):</label>
+<input id="extraIncome" required="" type="number"/>
+<label for="creditScore">Кредитный рейтинг (1–100):</label>
+<input id="creditScore" max="100" min="1" required="" type="number"/>
+
+
+<label for="manager">Менеджер:</label>
+<select id="manager" required>
+  <option value="">Выберите менеджера</option>
+  <option value="Виктор">Виктор</option>
+  <option value="Алихан">Алихан</option>
+  <option value="Айдын">Айдын</option>
+  <option value="Адиль">Адиль</option>
+  <option value="Александр">Александр</option>
+  <option value="Анна">Анна</option>
+  <option value="Василий">Василий</option>
+</select>
+
+<label for="desiredAmount">Желаемая сумма кредита (₸):</label>
+<input id="desiredAmount" type="number" required placeholder="Например, 2 000 000"/>
+<button type="submit">ОТКРЫТЬ ОКНО ПОДАЧИ ЗАЯВКИ</button>
+</form>
+<!-- Ссылки -->
+<div id="links">
+<h3>Онлайн кредиты</h3>
+<a href="https://fmobile.kz/cash_credit" target="_blank">Кредит от Freedom</a>
+<a href="https://dengiclick.kz/" target="_blank">МФО ДК до 500 000 ₸</a>
+<a href="https://solva.kz/loans/online/" target="_blank">Кредит от Solva</a>
+<h3 style="margin-top: 30px;">Цифровая ипотека</h3>
+<a href="https://bankffin.kz/ipoteka/login" target="_blank">Ипотека от Bank FFIN</a>
+<a href="https://m.bcc.kz/mges" target="_blank">Цифровая ипотека от BCC</a>
+<a href="https://altynbank.kz/ru/personal/digital-mortgage-loan?ysclid=mbj35zw0mx685084838" target="_blank">AltynBank ипотека</a>
+</div>
+<script>
+document.getElementById('calcForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const amount = parseFloat(document.getElementById('calcAmount').value);
+  const term = parseInt(document.getElementById('calcTerm').value);
+  const rate = parseFloat(document.getElementById('calcRate').value);
+  if (isNaN(amount) || amount <= 0 || isNaN(term) || term <= 0 || isNaN(rate) || rate <= 0) {
+    document.getElementById('calcResult').textContent = 'Введите корректные данные.';
+    return;
+  }
+  const monthlyRate = rate / 12 / 100;
+  const payment = amount * (monthlyRate * Math.pow(1 + monthlyRate, term)) / (Math.pow(1 + monthlyRate, term) - 1);
+  document.getElementById('calcResult').textContent = `Ежемесячный платёж: ₸${payment.toFixed(0)}`;
+});
+
+document.getElementById('creditForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const iin = document.getElementById('iin').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const monthlyPayment = parseFloat(document.getElementById('monthlyPayment').value);
+  const salary = parseFloat(document.getElementById('salary').value);
+  const extraIncome = parseFloat(document.getElementById('extraIncome').value);
+  const creditScore = parseInt(document.getElementById('creditScore').value);
+  const totalIncome = salary + extraIncome;
+  const debtLoad = monthlyPayment / totalIncome;
+  let rating = 'Высокий', probability = 85;
+  if (creditScore < 40 || debtLoad > 0.5) { rating = 'Низкий'; probability = 20; }
+  else if (creditScore < 70 || debtLoad > 0.3) { rating = 'Средний'; probability = 50; }
+  document.getElementById('probabilityFill').style.width = probability + '%';
+  alert(`Здравствуйте!
+Ваш рейтинг: ${creditScore}
+Нагрузка: ${(debtLoad * 100).toFixed(1)}%
+Результат: ${rating}
+Вероятность одобрения: ${probability}%`);
+});
+
+let timerInterval;
+function startCountdown(duration) {
+  let timer = duration, minutes, seconds;
+  const countdownEl = document.getElementById('countdownTimer');
+  countdownEl.style.display = 'block';
+
+  clearInterval(timerInterval);
+  timerInterval = setInterval(function () {
+    minutes = parseInt(timer / 60, 10);
+    seconds = parseInt(timer % 60, 10);
+    countdownEl.textContent = "⏳ Заявка: " + 
+      String(minutes).padStart(2, '0') + ":" + 
+      String(seconds).padStart(2, '0');
+    if (--timer < 0) {
+      clearInterval(timerInterval);
+      countdownEl.textContent = "⏳ Заявка: время вышло!";
+    }
+  }, 1000);
+}
+
+// Вставим вызов после успешной отправки заявки
+document.getElementById('creditForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const iin = document.getElementById('iin').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const monthlyPayment = parseFloat(document.getElementById('monthlyPayment').value);
+  const salary = parseFloat(document.getElementById('salary').value);
+  const extraIncome = parseFloat(document.getElementById('extraIncome').value);
+  const creditScore = parseInt(document.getElementById('creditScore').value);
+  const totalIncome = salary + extraIncome;
+  const debtLoad = monthlyPayment / totalIncome;
+  let rating = 'Высокий', probability = 85;
+  if (creditScore < 40 || debtLoad > 0.5) { rating = 'Низкий'; probability = 20; }
+  else if (creditScore < 70 || debtLoad > 0.3) { rating = 'Средний'; probability = 50; }
+  document.getElementById('probabilityFill').style.width = probability + '%';
+
+  // Показываем сообщение
+  alert(`Здравствуйте!
+Ваш рейтинг: ${creditScore}
+Нагрузка: ${(debtLoad * 100).toFixed(1)}%
+Результат: ${rating}
+Вероятность одобрения: ${probability}%`);
+
+  // Запускаем таймер на 20 минут
+  startCountdown(60 * 30);
+});
+
+document.getElementById('creditForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const data = {
+    iin: document.getElementById('iin').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    monthlyPayment: document.getElementById('monthlyPayment').value,
+    salary: document.getElementById('salary').value,
+    extraIncome: document.getElementById('extraIncome').value,
+    creditScore: document.getElementById('creditScore').value,
+    desiredAmount: document.getElementById('desiredAmount').value,
+    manager: document.getElementById('manager').value
+  };
+
+  fetch("https://script.google.com/macros/s/AKfycbzWAJuZgj4aaytdLVRsGY6wTOAKC9aqMF29uDTbFPzhD8IxpJzTxFxWjo1Ttp_xeuDyCQ/exec", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      alert("✅ Заявка успешно отправлена!");
+    } else {
+      alert("❌ Ошибка при отправке. Повторите попытку.");
+    }
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("❌ Сетевая ошибка.");
+  });
+});
+
+</script>
+</body>
+</html>
